@@ -92,10 +92,13 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
   useEffect(() => {
     const newLocation = router.query.location;
 
-    if (newLocation) {
+    const locationExists =
+      vaccionationsList.findIndex(item => item.location === newLocation) >= 0;
+
+    if (newLocation && locationExists) {
       setCurrentLocation(String(newLocation));
     }
-  }, [router.query.location]);
+  }, [router.query.location, vaccionationsList]);
 
   return (
     <>
