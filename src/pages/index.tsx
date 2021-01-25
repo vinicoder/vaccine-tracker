@@ -31,7 +31,23 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
   const router = useRouter();
 
   const currentLocationInfo = useMemo(() => {
-    return vaccionationsList.find(item => item.location === currentLocation);
+    const currentInfo = vaccionationsList.find(
+      item => item.location === currentLocation,
+    );
+
+    if (currentInfo) {
+      const location =
+        currentInfo.location === 'World'
+          ? 'worldwide'
+          : `in ${currentInfo.location}`;
+
+      return {
+        ...currentInfo,
+        location,
+      };
+    }
+
+    return {} as VaccinationInfo;
   }, [vaccionationsList, currentLocation]);
 
   const currentDayOfWeek = useMemo(() => {
@@ -66,7 +82,9 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
   const handleLocationChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
       const location = e.target.value;
-      router.push(`/?location=${location}`, undefined, { shallow: true });
+      router.push(`/?location=${encodeURIComponent(location)}`, undefined, {
+        shallow: true,
+      });
     },
     [router],
   );
@@ -101,7 +119,7 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
                 <span>
                   against <span>COVID-19</span>
                 </span>{' '}
-                in {currentLocationInfo.location}*
+                {currentLocationInfo.location}*
               </h1>
               <label htmlFor="select-location">
                 <span>
