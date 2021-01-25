@@ -9,7 +9,7 @@ import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { format } from 'date-fns';
-import { FiGlobe } from 'react-icons/fi';
+import { FiGithub, FiGlobe, FiCode } from 'react-icons/fi';
 
 import vaccinationsData from '../data/vaccinationsData';
 
@@ -173,16 +173,43 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
           </List>
         </Main>
         <Footer>
-          * Source from{' '}
-          <a
-            href="https://ourworldindata.org/grapher/cumulative-covid-vaccinations?tab=chart&stackMode=absolute&time=2020-12-26..latest&region=World"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Our World in Data
-          </a>
-          . Increase rate relative to change between the last 5 days of reported
-          data.
+          <div>
+            * Source from{' '}
+            <a
+              href="https://ourworldindata.org/grapher/cumulative-covid-vaccinations?tab=chart&stackMode=absolute&time=2020-12-26..latest&region=World"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <strong>Our World in Data</strong>
+            </a>
+            . Increase rate relative to change between the last 5 days of
+            reported data.
+          </div>
+          <div>
+            <a
+              href="https://github.com/vinicoder"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FiCode />
+              <span>
+                {' '}
+                Developed by <strong>vinicoder</strong>
+              </span>
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://github.com/vinicoder/vaccine-tracker"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FiGithub />{' '}
+              <span>
+                <strong>Contribute</strong> on Github
+              </span>
+            </a>
+          </div>
         </Footer>
       </Container>
     </>

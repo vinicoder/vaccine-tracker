@@ -235,15 +235,48 @@ export const Footer = styled.footer`
   margin-top: 32px;
   padding-top: 32px;
   border-top: solid 1px #e6e6e6;
-  font-size: 0.6em;
+  font-size: 0.8em;
 
   a {
     color: inherit;
-    font-weight: 700;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+
+    svg{
+      margin-right: 8px;
+    }
+
+    strong{
+      font-weight: 700;
+    }
+
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+
+  > div + div{
+    margin-top: 16px;
   }
 
   @media screen and (min-width: 768px) {
-    margin-top: 80px;
+    margin: 80px 0;
+    font-size: 0.6em;
+
+    display: flex;
+
+    > div{
+      flex: 1;
+      
+      &:first-child{
+        padding-right: 16px;
+      }
+
+      &:not(:first-child){
+        flex: 0.8;
+        text-align: right;
+      }
+    }
   }
 `;
