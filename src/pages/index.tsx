@@ -80,87 +80,91 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
   }, [router.query.location]);
 
   return (
-    <Container>
-      <Header>
-        <div>
-          <strong>{currentDayOfWeek}</strong>
-          <p>{currentFullDate}</p>
-        </div>
-        <div>
-          <strong>Last update</strong>
-          <p>{lastUpdateDate}</p>
-        </div>
-      </Header>
-      <Main>
-        <div>
-          <Section>
-            <h1>
-              <strong>{currentLocationInfo.people_vaccinated}</strong> people
-              vaccinated{' '}
-              <span>
-                against <span>COVID-19</span>
-              </span>{' '}
-              in {currentLocationInfo.location}*
-            </h1>
-            <label htmlFor="select-location">
-              <span>
-                <FiGlobe /> Change location
-              </span>
-              <select id="select-location" onChange={handleLocationChange}>
-                {locationsList.map(item => (
-                  <option key={item.id} value={item.location}>
-                    {item.location}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </Section>
+    <>
+      <Container>
+        <Header>
+          <div>
+            <strong>{currentDayOfWeek}</strong>
+            <p>{currentFullDate}</p>
+          </div>
+          <div>
+            <strong>Last update</strong>
+            <p>{lastUpdateDate}</p>
+          </div>
+        </Header>
+        <Main>
+          <div>
+            <Section>
+              <h1>
+                <strong>{currentLocationInfo.people_vaccinated}</strong> people
+                vaccinated{' '}
+                <span>
+                  against <span>COVID-19</span>
+                </span>{' '}
+                in {currentLocationInfo.location}*
+              </h1>
+              <label htmlFor="select-location">
+                <span>
+                  <FiGlobe /> Change location
+                </span>
+                <select id="select-location" onChange={handleLocationChange}>
+                  {locationsList.map(item => (
+                    <option key={item.id} value={item.location}>
+                      {item.location}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </Section>
 
-          <Section>
-            <img src="/banner.svg" alt="Mulher sendo vacinada" />
-            <span>
-              Design By{' '}
-              <a
-                href="https://www.freepik.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Freepik
-              </a>
-            </span>
-          </Section>
-        </div>
-
-        <List>
-          {vaccionationsList.map(vaccination => (
-            <li key={vaccination.id}>
-              <Link
-                href={`/?location=${encodeURIComponent(vaccination.location)}`}
-                shallow
-                passHref
-              >
-                <a>
-                  <strong>{vaccination.location}</strong>
-                  <span>{vaccination.people_vaccinated}</span>
+            <Section>
+              <img src="/banner.svg" alt="Mulher sendo vacinada" />
+              <span>
+                Design By{' '}
+                <a
+                  href="https://www.freepik.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Freepik
                 </a>
-              </Link>
-            </li>
-          ))}
-        </List>
-      </Main>
-      <Footer>
-        * Source from{' '}
-        <a
-          href="https://ourworldindata.org/grapher/cumulative-covid-vaccinations?tab=chart&stackMode=absolute&time=2020-12-26..latest&region=World"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Our World in Data
-        </a>
-        . Increase rate relative to change between the last 5 days of reported
-        data.
-      </Footer>
-    </Container>
+              </span>
+            </Section>
+          </div>
+
+          <List>
+            {vaccionationsList.map(vaccination => (
+              <li key={vaccination.id}>
+                <Link
+                  href={`/?location=${encodeURIComponent(
+                    vaccination.location,
+                  )}`}
+                  shallow
+                  passHref
+                >
+                  <a>
+                    <strong>{vaccination.location}</strong>
+                    <span>{vaccination.people_vaccinated}</span>
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </List>
+        </Main>
+        <Footer>
+          * Source from{' '}
+          <a
+            href="https://ourworldindata.org/grapher/cumulative-covid-vaccinations?tab=chart&stackMode=absolute&time=2020-12-26..latest&region=World"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Our World in Data
+          </a>
+          . Increase rate relative to change between the last 5 days of reported
+          data.
+        </Footer>
+      </Container>
+    </>
   );
 };
 

@@ -4,6 +4,8 @@ export const Container = styled.div`
   padding: 30px;
   max-width: 1200px;
   margin: 0 auto;
+
+  overflow: hidden;
 `;
 
 export const Header = styled.header`
@@ -22,7 +24,7 @@ export const Header = styled.header`
     &:first-child {
       font-size: 1.1em;
       strong {
-        color: #2a9d8f;
+        color: #ef476f;
       }
     }
 
@@ -76,6 +78,24 @@ export const Section = styled.section`
   align-items: flex-start;
 
   &:first-child {
+    position: relative;
+
+    &:before{
+      content: '';
+      position: absolute;
+      top: -30vh;
+      left: -30px;
+      width: calc(100% + 60px);
+      height: 80vh;
+      background: url('/logo.svg') 35vw center / 100% 100% no-repeat;
+      z-index: -1;
+      opacity: 0.08;
+
+      @media screen and (min-width: 1200px) {
+        display: none;
+      }
+    }
+
     h1 {
       font-size: 2.4em;
       line-height: 1.1em;
@@ -104,13 +124,13 @@ export const Section = styled.section`
 
       &:hover {
         &::after {
-          border-bottom-color: #118ab2;
+          border-bottom-color: #ef476f;
         }
       }
 
       svg {
         margin-right: 8px;
-        color: #118ab2;
+        color: #ef476f;
       }
 
       &::after {
@@ -184,7 +204,7 @@ export const List = styled.ul`
 
       &::before {
         content: '• ';
-        color: #118ab2;
+        color: #ef476f;
       }
       strong {
         font-weight: 700;
