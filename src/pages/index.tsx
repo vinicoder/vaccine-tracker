@@ -7,12 +7,13 @@ import React, {
 } from 'react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { format } from 'date-fns';
 import { FiGlobe } from 'react-icons/fi';
 
 import vaccinationsData from '../data/vaccinationsData';
 
-import { Container, Header, Main, List, Footer } from '../styles/page';
+import { Container, Header, Main, Section, List, Footer } from '../styles/page';
 
 interface VaccinationInfo {
   id: string;
@@ -39,6 +40,10 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
 
   const currentFullDate = useMemo(() => {
     return format(new Date(), 'PP');
+  }, []);
+
+  const lastUpdateDate = useMemo(() => {
+    return format(new Date(), 'Pp');
   }, []);
 
   const locationsList = useMemo(() => {
@@ -77,12 +82,18 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
   return (
     <Container>
       <Header>
-        <strong>{currentDayOfWeek}</strong>
-        <p>{currentFullDate}</p>
+        <div>
+          <strong>{currentDayOfWeek}</strong>
+          <p>{currentFullDate}</p>
+        </div>
+        <div>
+          <strong>Last update</strong>
+          <p>{lastUpdateDate}</p>
+        </div>
       </Header>
       <Main>
         <div>
-          <section>
+          <Section>
             <h1>
               <strong>{currentLocationInfo.people_vaccinated}</strong> people
               vaccinated{' '}
@@ -103,21 +114,36 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
                 ))}
               </select>
             </label>
-          </section>
+          </Section>
 
-          <section>
+          <Section>
             <img src="/banner.svg" alt="Mulher sendo vacinada" />
             <span>
-              Design By <a href="https://www.freepik.com">Freepik</a>
+              Design By{' '}
+              <a
+                href="https://www.freepik.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Freepik
+              </a>
             </span>
-          </section>
+          </Section>
         </div>
 
         <List>
           {vaccionationsList.map(vaccination => (
             <li key={vaccination.id}>
-              <strong>{vaccination.location}</strong>
-              <span>{vaccination.people_vaccinated}</span>
+              <Link
+                href={`/?location=${encodeURIComponent(vaccination.location)}`}
+                shallow
+                passHref
+              >
+                <a>
+                  <strong>{vaccination.location}</strong>
+                  <span>{vaccination.people_vaccinated}</span>
+                </a>
+              </Link>
             </li>
           ))}
         </List>
@@ -141,11 +167,14 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const vaccionationsList = await vaccinationsData();
 
+  const minutesToRevalidate = 5;
+  const revalidate = minutesToRevalidate * 60;
+
   return {
     props: {
       vaccionationsList,
     },
-    revalidate: 60,
+    revalidate,
   };
 };
 
