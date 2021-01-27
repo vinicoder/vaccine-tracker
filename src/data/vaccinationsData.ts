@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 interface VaccinationInfo {
   id: string;
   location: string;
-  people_vaccinated: string;
+  total_vaccinations: string;
 }
 
 export default async (): Promise<VaccinationInfo[]> => {
@@ -20,10 +20,10 @@ export default async (): Promise<VaccinationInfo[]> => {
   });
 
   const vaccinations = data
-    .filter(item => Number(item.people_vaccinated) > 0)
+    .filter(item => Number(item.total_vaccinations) > 0)
     .sort((a, b) => {
-      const numberA = Number(a.people_vaccinated);
-      const numberB = Number(b.people_vaccinated);
+      const numberA = Number(a.total_vaccinations);
+      const numberB = Number(b.total_vaccinations);
 
       if (numberA < numberB) {
         return 1;
@@ -38,11 +38,11 @@ export default async (): Promise<VaccinationInfo[]> => {
         index === array.findIndex(item => item.location === current.location),
     )
     .map(item => {
-      const people_vaccinated = new Intl.NumberFormat().format(
-        Number(item.people_vaccinated),
+      const total_vaccinations = new Intl.NumberFormat().format(
+        Number(item.total_vaccinations),
       );
 
-      return { id: uuid(), people_vaccinated, location: item.location };
+      return { id: uuid(), total_vaccinations, location: item.location };
     });
 
   return vaccinations;

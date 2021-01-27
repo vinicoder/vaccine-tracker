@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { FiGithub, FiGlobe, FiCode } from 'react-icons/fi';
@@ -18,7 +19,7 @@ import { Container, Header, Main, Section, List, Footer } from '../styles/page';
 interface VaccinationInfo {
   id: string;
   location: string;
-  people_vaccinated: string;
+  total_vaccinations: string;
 }
 
 interface HomeProps {
@@ -102,6 +103,9 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
 
   return (
     <>
+      <Head>
+        <title>Vaccine Tracker</title>
+      </Head>
       <Container>
         <Header>
           <div>
@@ -117,7 +121,7 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
           <div>
             <Section>
               <h1>
-                <strong>{currentLocationInfo.people_vaccinated}</strong> people
+                <strong>{currentLocationInfo.total_vaccinations}</strong> people
                 vaccinated{' '}
                 <span>
                   against <span>COVID-19</span>
@@ -165,7 +169,7 @@ const Home: React.FC<HomeProps> = ({ vaccionationsList }) => {
                 >
                   <a>
                     <strong>{vaccination.location}</strong>
-                    <span>{vaccination.people_vaccinated}</span>
+                    <span>{vaccination.total_vaccinations}</span>
                   </a>
                 </Link>
               </li>
